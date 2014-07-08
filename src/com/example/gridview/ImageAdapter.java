@@ -40,7 +40,7 @@ public class ImageAdapter extends BaseAdapter {
         float dd = dm.density;
         float px = 25 * dd;
         float screenWidth = dm.widthPixels;
-        int newWidth = (int) (screenWidth - px) / 4; // 一行顯示四個縮圖
+        int newWidth = (int) (screenWidth - px) / 2; // 一行顯示2個縮圖
 
         layout.setLayoutParams(new GridView.LayoutParams(newWidth, newWidth));
         imageView.setId(position);
@@ -56,7 +56,7 @@ public class ImageAdapter extends BaseAdapter {
         imageView.setImageBitmap(bm);
         imageView.setScaleType(ImageView.ScaleType.FIT_XY);
 
-        //點擊照片
+        //點擊小照片的事件
         imageView.setOnClickListener(new OnClickListener() {
 
             @Override

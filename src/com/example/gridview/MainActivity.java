@@ -17,6 +17,14 @@ import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+/*
+ * MainActivity 
+ * 	取得SD卡圖片, 並給予id
+ *  thumbs  存放縮圖的id
+ *  imagePaths  存放圖片的路徑
+ * ImageAdapter 
+ */
+
 public class MainActivity extends Activity {
 
      private GridView gridView;
@@ -62,7 +70,7 @@ public class MainActivity extends Activity {
           imageAdapter.notifyDataSetChanged();
 
 
-          imageView.setOnClickListener(new OnClickListener() {
+          imageView.setOnClickListener(new OnClickListener() { //在點小圖後 顯示的大圖的觸控事件
 
                @Override
                public void onClick(View v) {
