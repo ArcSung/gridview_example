@@ -5,6 +5,7 @@ import java.util.List;
 
 import android.app.Activity;
 import android.content.ContentResolver;
+import android.content.Context;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -22,7 +23,8 @@ import android.widget.Toast;
  * 	取得SD卡圖片, 並給予id
  *  thumbs  存放縮圖的id
  *  imagePaths  存放圖片的路徑
- * ImageAdapter 
+ * ImageAdapter (Context context, List coll)
+ *  coll = MainActivity.thumbs
  */
 
 public class MainActivity extends Activity {
@@ -42,7 +44,7 @@ public class MainActivity extends Activity {
           imageView = (ImageView) findViewById(R.id.imageView1);
 
           ContentResolver cr = getContentResolver();
-          String[] projection = { MediaStore.Images.Media._ID, MediaStore.Images.Media.DATA };
+          String[] projection = { MediaStore.Images.Media._ID, MediaStore.Images.Media.DATA };  //初始 欄位  DATA 代表路徑
 
           //查詢SD卡的圖片
           Cursor cursor = cr.query(MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
@@ -52,15 +54,16 @@ public class MainActivity extends Activity {
           imagePaths = new ArrayList<String>();
 
           for (int i = 0; i < cursor.getCount(); i++) {
-
-               cursor.moveToPosition(i);
-               int id = cursor.getInt(cursor
+        	  cursor.moveToPosition(i);
+              String filepath = cursor.getString(cursor.getColumnIndex(MediaStore.Images.Media.DATA));//抓路徑
+              
+              if (filepath.indexOf("ON_THE_ROAD") != -1)        //選擇特定路徑
+              {
+            	  imagePaths.add(filepath);
+            	  int id = cursor.getInt(cursor
                          .getColumnIndex(MediaStore.Images.Media._ID));// ID
-               thumbs.add(id + "");
-
-               String filepath = cursor.getString(cursor.getColumnIndex(MediaStore.Images.Media.DATA));//抓路徑
-
-               imagePaths.add(filepath);
+            	  thumbs.add(id + "");
+              }
           }
 
           cursor.close();
